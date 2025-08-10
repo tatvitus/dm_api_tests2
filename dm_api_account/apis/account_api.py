@@ -47,6 +47,11 @@ class AccountApi:
             self,
             json_data
     ):
+        """
+        Change registered user email
+        :param token:
+        :return:
+        """
         response = requests.put(
             url=f'{self.host}/v1/account/email',
             json=json_data
