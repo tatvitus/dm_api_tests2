@@ -10,7 +10,7 @@ def test_put_v1_account_email():
     account_api = AccountApi(host='http://5.63.153.31:5051')
     login_api = LoginApi(host='http://5.63.153.31:5051')
     mailhog_api = MailhogApi(host='http://5.63.153.31:5025')
-    login = 'tus4_test8'
+    login = 'tus4_test11'
     password = '112233'
     email = f'{login}@mail.ru'
     json_data = {
@@ -92,11 +92,23 @@ def test_put_v1_account_email():
     token = get_activation_token_by_login(login, response)
     assert token is not None, f"Токен для пользователя {login} не был получен "
     # Активация пользователя c новой почты
+    response = account_api.put_v1_account_token(token=token)
 
+    print(response.status_code)
+    print(response.text)
+    assert response.status_code == 200, 'Пользователь не был активирован'
     # Авторизация пользователя с новой почты
+    json_data = {
+        'login': login,
+        'password': password,
+        'rememberMe': True,
+    }
 
+    response = login_api.post_v1_account_login(json_data=json_data)
 
-
+    print(response.status_code)
+    print(response.text)
+    assert response.status_code == 200, 'Пользователь не смог авторизоваться'
 
 
 
