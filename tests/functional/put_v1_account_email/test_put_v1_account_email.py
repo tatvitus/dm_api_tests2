@@ -26,7 +26,7 @@ def test_put_v1_account_email():
 
     account_helper = AccountHelper(dm_account_api=account, mailhog=mailhog)
 
-    login = 'tus4_test46'
+    login = 'tus4_test50'
     password = '112233'
     email = f'{login}@mail.ru'
 
@@ -54,7 +54,7 @@ def test_put_v1_account_email():
 
     # Получить письма
     # Получить новый активационный токен для подтверждения смены email
-    token = account_helper.get_activation_token_by_login(login=login, email=email, password=password)
+    token = account_helper.get_activation_token_by_login(login=login)
     assert token is not None, f"Токен для пользователя {login} не был получен "
 
     # Активация пользователя c новой почты
