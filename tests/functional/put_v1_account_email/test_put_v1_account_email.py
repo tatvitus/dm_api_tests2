@@ -26,12 +26,41 @@ def test_put_v1_account_email():
 
     account_helper = AccountHelper(dm_account_api=account, mailhog=mailhog)
 
-    login = 'tus4_test30'
+    login = 'tus4_test45'
     password = '112233'
     email = f'{login}@mail.ru'
 
     account_helper.register_new_user(login=login, password=password, email=email)  #регистрация
     account_helper.user_login(login=login, password=password) #авторизация
-    account_helper.new_user_email(login=login, password=password, email=email) #смена почты
+
+    # Меняем email
+    json_data = {
+        'login': login,
+        'password': password,
+        'email': email,
+    }
+    response = account.account_api.put_v1_account_email(json_data=json_data)
+    assert response.status_code == 200, 'Пользователь не смог изменить емейл'
+
+    # Пытаемся войти, получаем 403
+    json_data = {
+        'login': login,
+        'password': password,
+        'rememberMe': True,
+    }
+
+    response = account.login_api.post_v1_account_login(json_data=json_data)
+    assert response.status_code == 403, f'Получен другой код ответа {response.status_code}'
+
+    # Получить письма
+    # Получить новый активационный токен для подтверждения смены email
+    token = account_helper.get_activation_token_by_login(login=login, email=email, password=password)
+    assert token is not None, f"Токен для пользователя {login} не был получен "
+
+    # Активация пользователя c новой почты
+    response = account.account_api.put_v1_account_token(token=token)
+    assert response.status_code == 200, 'Пользователь не был активирован'
+
+    # Авторизация пользователя с новой почты
     account_helper.user_login(login=login, password=password) #повторный вход
 
