@@ -1,5 +1,3 @@
-from conftest import auth_account_helper
-
 
 def test_put_v1_account_password(
         account_helper,
