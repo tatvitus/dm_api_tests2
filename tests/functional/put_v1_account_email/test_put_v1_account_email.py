@@ -57,7 +57,7 @@ def test_put_v1_account_email(prepare_user):
 
     # Получить письма
     # Получить новый активационный токен для подтверждения смены email
-    token = account_helper.get_activation_token_by_login(login=login)
+    token = account_helper.get_token(login=login, token_type="activation")
     assert token is not None, f"Токен для пользователя {login} не был получен "
 
     # Активация пользователя c новой почты

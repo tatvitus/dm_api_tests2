@@ -54,7 +54,7 @@ def auth_account_helper(
         host='http://5.63.153.31:5051', disable_log=False)
     account = DMApiAccount(configuration=dm_api_configuration)
     account_helper = AccountHelper(dm_account_api=account, mailhog=mailhog_api)
-    account_helper.auth_client(login="tus3_test31", password="112233")
+    account_helper.auth_client(login="tus3_test32", password="112233")
     return account_helper
 
 
