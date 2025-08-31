@@ -17,7 +17,7 @@ def test_put_v1_account_email(account_helper, prepare_user,
         password=password,
         remember_me=remember_me
     )
-    response = account_helper.dm_account_api.login_api.post_v1_account_login(login_credentials=login_credentials)
+    response = account_helper.dm_account_api.login_api.post_v1_account_login(login_credentials=login_credentials, validate_response=False)
     assert response.status_code == 403, f'Получен другой код ответа {response.status_code}'
 
     # Получить письма
