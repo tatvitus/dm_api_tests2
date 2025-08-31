@@ -9,7 +9,7 @@ def test_put_v1_account_email(account_helper, prepare_user,
 
     account_helper.register_new_user(login=login, password=password, email=email)  #регистрация
     account_helper.user_login(login=login, password=password) #авторизация
-    account_helper.change_mail(login=login, password=password, email=email) #смена email
+    account_helper.change_email(login=login, password=password, email=email) #смена email
     # Пытаемся войти, получаем 403
     json_data = {
         'login': login,
