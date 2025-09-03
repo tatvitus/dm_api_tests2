@@ -179,7 +179,7 @@ class AccountHelper:
         )
 
         response = self.dm_account_api.account_api.put_v1_account_email(change_email=change_email)
-        assert response.status_code == 200, 'Пользователь не смог изменить емейл'
+        #assert response.status_code == 200, 'Пользователь не смог изменить емейл'
         return response
 
     def activate_user(

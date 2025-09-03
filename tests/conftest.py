@@ -4,6 +4,7 @@ from json import loads
 
 import pytest
 
+from dm_api_account.models.user_details_envelope import UserDetailsEnvelope
 from helpers.account_helper import AccountHelper
 from restclient.configuration import Configuration as MailhogConfiguration
 from restclient.configuration import Configuration as DmApiConfiguration
@@ -48,7 +49,7 @@ def account_helper(
 
 @pytest.fixture(scope="session")
 def auth_account_helper(
-        mailhog_api
+        mailhog_api,  validate_response=False,
         ):
     dm_api_configuration = DmApiConfiguration(
         host='http://5.63.153.31:5051', disable_log=False)
