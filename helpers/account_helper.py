@@ -1,5 +1,8 @@
 import time
-from json import loads
+from json import (
+    loads,
+    JSONDecodeError,
+)
 
 from dm_api_account.models.change_email import ChangeEmail
 from dm_api_account.models.change_password import ChangePassword
@@ -145,7 +148,10 @@ class AccountHelper:
         token = None
         response = self.mailhog.mailhog_api.get_api_v2_messages()
         for item in response.json()["items"]:
-            user_data = loads(item["Content"]["Body"])
+            try:
+                user_data = loads(item["Content"]["Body"])
+            except (JSONDecodeError, KeyError):
+                continue
             user_login = user_data["Login"]
             activation_token = user_data.get("ConfirmationLinkUrl")
             reset_token = user_data.get("ConfirmationLinkUri")
