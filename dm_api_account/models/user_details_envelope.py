@@ -48,10 +48,10 @@ class UserDetails(BaseModel):
     settings: UserSettings = None
 
 class UserSettings(BaseModel):
-        model_config = ConfigDict(extra='forbid')
-        color_schema: ColorSchema = Field(None, alias='colorSchema')
-        nanny_greetings_message: str = Field(None, alias='nannyGreetingsMessage')
-        paging: PagingSettings = None
+    model_config = ConfigDict(extra='forbid')
+    color_schema: ColorSchema = Field(None, alias='colorSchema')
+    nanny_greetings_message: str = Field(None, alias='nannyGreetingsMessage')
+    paging: PagingSettings = None
 
 class ColorSchema(Enum):
     MODERN = 'Modern'
@@ -69,6 +69,6 @@ class PagingSettings(BaseModel):
     entities_per_page: int = Field(None, alias='entitiesPerPage')
 
 class UserDetailsEnvelope(BaseModel):
-        model_config = ConfigDict(extra='forbid')
-        resource: Optional[UserDetails] = None
-        metadata: Optional[Any] = None
+    model_config = ConfigDict(extra='forbid')
+    resource: Optional[UserDetails] = None
+    metadata: Optional[Any] = None
