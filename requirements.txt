@@ -1,4 +1,3 @@
-vyper
 annotated-types==0.7.0
 assertpy==1.1
 certifi==2025.8.3
