@@ -44,7 +44,7 @@ def set_config(request):
     v.add_config_path(config)
     v.read_in_config()
     for option in options:
-        v.set(f'{option}', request.config.getoption(f'--{option}'))
+        v.set(option, request.config.getoption(f'--{option}'))
 
 def pytest_addoption(parser):
     parser.addoption('--env', action='store', default='stg', help='run stg')
@@ -77,8 +77,7 @@ def account_helper(
 
 @pytest.fixture()
 def auth_account_helper(
-        mailhog_api,  validate_response=False,
-        ):
+        mailhog_api):
     dm_api_configuration = DmApiConfiguration(
         host=v.get("service.dm_api_account"), disable_log=False)
     account = DMApiAccount(configuration=dm_api_configuration)
