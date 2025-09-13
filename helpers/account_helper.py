@@ -4,6 +4,8 @@ from json import (
     JSONDecodeError,
 )
 
+import allure
+
 from dm_api_account.models.change_email import ChangeEmail
 from dm_api_account.models.change_password import ChangePassword
 from dm_api_account.models.login_credentials import LoginCredentials
@@ -64,6 +66,7 @@ class AccountHelper:
         self.dm_account_api.account_api.set_headers(token)
         self.dm_account_api.login_api.set_headers(token)
 
+    @allure.step("Регистрация нового пользователя")
     def register_new_user(
             self,
             login: str,
@@ -86,6 +89,7 @@ class AccountHelper:
         response = self.activate_user(token=token)
         return response
 
+    @allure.step("Аутентификация пользователя")
     def user_login(
             self,
             login: str,
