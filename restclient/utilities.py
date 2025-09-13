@@ -3,11 +3,6 @@ import json
 import allure
 import curlify
 
-from main import (
-    response,
-    response_json,
-)
-
 
 def allure_attach(fn):
     def wrapper(*args, **kwargs):
