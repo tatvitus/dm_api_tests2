@@ -15,10 +15,14 @@ class RestClient:
             configuration: Configuration
     ):
         self.host = configuration.host
-        self.headers = configuration.headers
+        self.set_headers(configuration.headers)
         self.disable_log = configuration.disable_log
         self.session = session()
         self.log = structlog.get_logger(__name__).bind(service='api')
+
+    def set_headers(self, headers):
+        if headers:
+            self.session.headers.update(headers)
 
     def post(
             self,
@@ -59,6 +63,7 @@ class RestClient:
 
         if self.disable_log:
             rest_response = self.session.request(method=method, url=full_url, **kwargs)
+            rest_response.raise_for_status()
             return rest_response
 
         log.msg(
@@ -71,6 +76,7 @@ class RestClient:
             data=kwargs.get('data')
         )
         rest_response = self.session.request(method=method, url=full_url, **kwargs)
+
         curl = curlify.to_curl(rest_response.request)
         print(curl)
 
@@ -80,6 +86,7 @@ class RestClient:
             headers=rest_response.headers,
             json=self._get_json(rest_response),
         )
+        rest_response.raise_for_status()
         return rest_response
 
     @staticmethod
