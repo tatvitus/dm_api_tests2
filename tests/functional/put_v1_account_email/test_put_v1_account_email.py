@@ -1,7 +1,12 @@
 from checkers.http_checkers import check_status_code_http
 from dm_api_account.models.login_credentials import LoginCredentials
 
+import allure
 
+
+@allure.suite("Тесты на проверку метода PUT v1/account/email")
+@allure.sub_suite("Позитивные тесты")
+@allure.title("Проверка смены email пользователя")
 def test_put_v1_account_email(account_helper, prepare_user,
                               account=None, remember_me=True):
 
