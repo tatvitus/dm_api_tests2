@@ -26,7 +26,7 @@ class RestClient:
         if headers:
             self.session.headers.update(headers)
 
-    @allure_attach
+    #@allure_attach
     def post(
             self,
             path,
@@ -34,7 +34,7 @@ class RestClient:
     ):
         return self._send_request(method='POST', path=path, **kwargs)
 
-    @allure_attach
+    #@allure_attach
     def get(
             self,
             path,
@@ -42,7 +42,7 @@ class RestClient:
     ):
         return self._send_request(method='GET', path=path, **kwargs)
 
-    @allure_attach
+    #@allure_attach
     def put(
             self,
             path,
@@ -50,7 +50,7 @@ class RestClient:
     ):
         return self._send_request(method='PUT', path=path, **kwargs)
 
-    @allure_attach
+    #@allure_attach
     def delete(
             self,
             path,
