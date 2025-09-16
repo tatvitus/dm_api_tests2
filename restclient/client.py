@@ -7,6 +7,7 @@ import uuid
 import curlify
 
 from restclient.configuration import Configuration
+from restclient.utilities import allure_attach
 
 
 class RestClient:
@@ -20,10 +21,12 @@ class RestClient:
         self.session = session()
         self.log = structlog.get_logger(__name__).bind(service='api')
 
+    # @allure_attach
     def set_headers(self, headers):
         if headers:
             self.session.headers.update(headers)
 
+    #@allure_attach
     def post(
             self,
             path,
@@ -31,6 +34,7 @@ class RestClient:
     ):
         return self._send_request(method='POST', path=path, **kwargs)
 
+    #@allure_attach
     def get(
             self,
             path,
@@ -38,6 +42,7 @@ class RestClient:
     ):
         return self._send_request(method='GET', path=path, **kwargs)
 
+    #@allure_attach
     def put(
             self,
             path,
@@ -45,6 +50,7 @@ class RestClient:
     ):
         return self._send_request(method='PUT', path=path, **kwargs)
 
+    #@allure_attach
     def delete(
             self,
             path,
@@ -52,6 +58,7 @@ class RestClient:
     ):
         return self._send_request(method='DELETE', path=path, **kwargs)
 
+    @allure_attach
     def _send_request(
             self,
             method,

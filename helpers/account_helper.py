@@ -4,6 +4,8 @@ from json import (
     JSONDecodeError,
 )
 
+import allure
+
 from dm_api_account.models.change_email import ChangeEmail
 from dm_api_account.models.change_password import ChangePassword
 from dm_api_account.models.login_credentials import LoginCredentials
@@ -52,7 +54,7 @@ class AccountHelper:
         self.dm_account_api = dm_account_api
         self.mailhog = mailhog
 
-
+    @allure.step("Авторизация пользователя")
     def auth_client(
             self,
             login: str,
@@ -64,6 +66,7 @@ class AccountHelper:
         self.dm_account_api.account_api.set_headers(token)
         self.dm_account_api.login_api.set_headers(token)
 
+    @allure.step("Регистрация нового пользователя")
     def register_new_user(
             self,
             login: str,
@@ -86,6 +89,7 @@ class AccountHelper:
         response = self.activate_user(token=token)
         return response
 
+    @allure.step("Аутентификация пользователя")
     def user_login(
             self,
             login: str,
@@ -107,8 +111,7 @@ class AccountHelper:
             assert response.headers["x-dm-auth-token"], "Токен для пользователя не был получен"
         return response
 
-
-
+    @allure.step("Смена пароля")
     def change_password(self, login: str, email: str, old_password: str, new_password: str):
         token = self.user_login(login=login, password=old_password)
         self.dm_account_api.account_api.post_v1_account_password(
@@ -130,6 +133,7 @@ class AccountHelper:
             )
         )
 
+    @allure.step("Получение токена")
     @retry(
         stop_max_attempt_number=5, retry_on_result=retry_if_result_none, wait_fixed=1000
     )
@@ -163,6 +167,7 @@ class AccountHelper:
 
         return token
 
+    @allure.step("Смена почты")
     def change_email(
             self,
             login: str,
@@ -183,6 +188,7 @@ class AccountHelper:
         #assert response.status_code == 200, 'Пользователь не смог изменить емейл'
         return response
 
+    @allure.step("Активация пользователя")
     def activate_user(
             self,
             token: str
