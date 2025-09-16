@@ -33,7 +33,7 @@ jobs:
         with:
            name: allure-results
            path: allure-results
-        retention-day: 1
+        retention-days: 1
 
 generate-report:
   runs-on: ubuntu-latest
@@ -53,7 +53,7 @@ generate-report:
       with:
         name: _site
         path: _site
-        retention-day: 1
+        retention-days: 1
 
 publish-report:
   runs-on: ubuntu-latest
