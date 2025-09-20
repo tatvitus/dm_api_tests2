@@ -20,7 +20,9 @@ pydantic==2.11.7
 pydantic_core==2.33.2
 Pygments==2.19.2
 PyHamcrest==2.1.0
+pyTelegramBotAPI==4.29.1
 pytest==8.4.1
+pytest-telegram-notifier==1.4.0
 python-dotenv==1.1.1
 PyYAML==6.0.2
 requests==2.32.4
@@ -29,6 +31,7 @@ rootpath==0.1.0
 six==1.17.0
 structlog==25.4.0
 swagger-coverage @ https://github.com/tatvitus/swagger-coverage-py/archive/refs/heads/master.zip#sha256=81ba58868f69b9269bff681271302bd24eb61c36ee6e445041f6590f2ae76498
+telebot==0.0.5
 toml==0.10.2
 tomli==2.2.1
 typing-inspection==0.4.1
