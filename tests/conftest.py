@@ -1,16 +1,18 @@
+import os
 from collections import namedtuple
 from datetime import datetime
-from json import loads
 
 import pytest
 from requests import options
 from pathlib import Path
+
+from swagger_coverage_py.reporter import CoverageReporter
 from vyper import v
 
-from dm_api_account.models.user_details_envelope import UserDetailsEnvelope
 from helpers.account_helper import AccountHelper
-from restclient.configuration import Configuration as MailhogConfiguration
-from restclient.configuration import Configuration as DmApiConfiguration
+#from helpers.account_helper import AccountHelper
+from packages.restclient.configuration import Configuration as MailhogConfiguration
+from packages.restclient.configuration import Configuration as DmApiConfiguration
 from services.dm_api_account import DMApiAccount
 from services.api_mailhog import MailHogApi
 
@@ -26,11 +28,21 @@ structlog.configure(
     ]
 )
 
+@pytest.fixture(scope="session", autouse=True)
+def setup_swagger_coverage():
+    reporter = CoverageReporter(api_name="dm-api-account", host="http://5.63.153.31:5051")
+    reporter.setup("/swagger/Account/swagger.json")
+    yield
+    reporter.generate_report()
+    reporter.cleanup_input_files()
+
 options = (
     'service.dm_api_account',
     'service.mailhog',
     'user.login',
     'user.password'
+    'telegram.chat_id',
+    'telegram.token',
 )
 
 @pytest.fixture(scope='session', autouse=True)
@@ -45,6 +57,12 @@ def set_config(request):
     v.read_in_config()
     for option in options:
         v.set(option, request.config.getoption(f'--{option}'))
+    os.environ["TELEGRAM_BOT_CHAT_ID"] = v.get("telegram.chat_id")
+    os.environ["TELEGRAM_BOT_ACCESS_TOKEN"] = v.get("telegram.token")
+    request.config.stash['telegram-notifier-addfields']['enviroment'] = config_name
+    request.config.stash['telegram-notifier-addfields']['report'] = "https://tatvitus.github.io/dm_api_tests2/"
+
+
 
 def pytest_addoption(parser):
     parser.addoption('--env', action='store', default='stg', help='run stg')

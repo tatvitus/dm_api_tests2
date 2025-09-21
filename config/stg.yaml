@@ -5,3 +5,7 @@ service:
 user:
   login: "tus3_test32"
   password: "112233"
+
+telegram:
+  chat_id: "-1002691101715"
+  token: "7554466154:AAGvn3YWxer1_B1i6eqDlKp2YCWxo8oLNno"

@@ -1,5 +1,5 @@
 from checkers.http_checkers import check_status_code_http
-from dm_api_account.models.login_credentials import LoginCredentials
+from clients.http.dm_api_account.models.login_credentials import LoginCredentials
 
 import allure
 
